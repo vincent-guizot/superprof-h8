@@ -32,7 +32,7 @@ class Vehicle {
     this.totalRentCost = totalRentCost || 0;
   }
 
-  getCondition() {
+  condition() {
     return this._condition;
   }
 
@@ -43,13 +43,14 @@ class Vehicle {
   // Release 1
   increasingAge() {
     if (this._condition > 0) {
-      this._condition += 1;
+      this.age += 1;
       let randomNumber = Math.ceil(Math.random() * 30);
       this._condition -= randomNumber;
       if (this._condition < 0) this._condition = 0;
-      console.log(this._condition);
+      //   console.log(this._condition);
     } else {
-      console.log("Tidak bisa menjalankan method");
+      this._condition = 0;
+      //   console.log("Tidak bisa menjalankan method");
     }
   }
 
@@ -65,16 +66,31 @@ class Vehicle {
   }
 
   // Release 4
-  calculate() {}
+  calculate() {
+    this.totalRentCost = this.customers.length * this.price;
+    this.totalRentDays = this.customers.length;
+  }
   report() {
-    let result = {
-      "Total rent days": 0,
-      "Total rent cost": 0,
-      good: 0,
-      bad: 0,
+    let review = this.getRatings();
+    return `Total rent days : ${this.totalRentDays} Total rent cost: ${this.totalRentCost} Reviews: ${this.customers.length} (${review.good} good, ${review.bad} bad)`;
+  }
+  resetReport() {
+    this.customers = [];
+    this.totalRentCost = 0;
+    this.totalRentDays = 0;
+  }
+  getRatings() {
+    let totalGood = 0;
+    let totalBad = 0;
+    this.customers.forEach((customer) => {
+      if (customer.review === "good") totalGood++;
+      else if (customer.review === "bad") totalBad++;
+    });
+    return {
+      good: totalGood,
+      bad: totalBad,
     };
   }
-  resetReport() {}
 }
 
 // Release 2
@@ -94,5 +110,67 @@ class Customer {
 
 let vehicle = new Vehicle("Toyota", "Camry", 200_000);
 
-vehicle.rent();
-console.log(vehicle);
+// Release 5
+
+do {
+  vehicle.increasingAge();
+  vehicle.rent();
+  vehicle.calculate();
+  console.log(
+    `Age ${
+      vehicle.age
+    } Report | Condition = ${vehicle.condition()}% | ${vehicle.report()}`
+  );
+  vehicle.resetReport();
+} while (vehicle.condition() > 0);
+
+// Release 6
+
+class Car extends Vehicle {
+  constructor(
+    brand,
+    model,
+    price,
+    condition,
+    age,
+    customers,
+    totalRentDays,
+    totalRentCost
+  ) {
+    super(
+      brand,
+      model,
+      price,
+      condition,
+      age,
+      customers,
+      totalRentCost,
+      totalRentDays
+    );
+  }
+}
+
+class MotorCycle extends Vehicle {
+  constructor(
+    brand,
+    model,
+    price,
+    condition,
+    age,
+    customers,
+    totalRentDays,
+    totalRentCost
+  ) {
+    super(
+      brand,
+      model,
+      price,
+      condition,
+      age,
+      customers,
+      totalRentCost,
+      totalRentDays
+    );
+  }
+}
+// Release 7
