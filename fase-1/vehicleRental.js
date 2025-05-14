@@ -124,13 +124,12 @@ do {
   vehicle.resetReport();
 } while (vehicle.condition() > 0);
 
-// Release 6
+// Release 6 dan 7
 
 class Car extends Vehicle {
   constructor(
     brand,
     model,
-    price,
     condition,
     age,
     customers,
@@ -140,7 +139,7 @@ class Car extends Vehicle {
     super(
       brand,
       model,
-      price,
+      300000,
       condition,
       age,
       customers,
@@ -154,7 +153,6 @@ class MotorCycle extends Vehicle {
   constructor(
     brand,
     model,
-    price,
     condition,
     age,
     customers,
@@ -164,13 +162,28 @@ class MotorCycle extends Vehicle {
     super(
       brand,
       model,
-      price,
+      100000,
       condition,
       age,
       customers,
       totalRentCost,
       totalRentDays
     );
+    this.frameType = "Tubular Frame";
   }
 }
+
+class CarCustomer extends Customer {
+  constructor() {
+    super();
+  }
+}
+
+class MotorCycleCustomer extends Customer {
+  constructor() {
+    super();
+  }
+}
+
 // Release 7
+
