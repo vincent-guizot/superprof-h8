@@ -45,9 +45,9 @@ class Vehicle {
   increasingAge() {
     if (this.condition > 0) {
       this.age += 1;
-      let randomNumber = Math.ceil(Math.random() * 30);
+      let randomNumber = Math.floor(Math.random() * 30) + 1;
       this.setCondition = this.condition - randomNumber;
-      if (this._condition < 0) this._condition = 0;
+      if (this.condition < 0) this.setCondition = 0;
       //   console.log(this._condition);
     } else {
       this.setCondition = 0;
@@ -118,14 +118,14 @@ do {
   vehicle.rent();
   vehicle.calculate();
   console.log(
-    `Age ${
-      vehicle.age
-    } Report | Condition = ${vehicle.condition}% | ${vehicle.report()}`
+    `Age ${vehicle.age} Report | Condition = ${
+      vehicle.condition
+    }% | ${vehicle.report()}`
   );
   vehicle.resetReport();
 } while (vehicle.condition > 0);
 
-// Release 6 dan 7
+// Release 6 dan 7 dan 8
 
 class Car extends Vehicle {
   constructor(
@@ -147,6 +147,13 @@ class Car extends Vehicle {
       totalRentCost,
       totalRentDays
     );
+  }
+  rent() {
+    let index = 0;
+    while (index > 15) {
+      this.customers.push(new Customer());
+      index++;
+    }
   }
 }
 
@@ -171,6 +178,19 @@ class MotorCycle extends Vehicle {
       totalRentDays
     );
     this.frameType = "Tubular Frame";
+  }
+
+  increasingAge() {
+    if (this.condition > 0) {
+      this.age += 1;
+      let randomNumber = Math.floor(Math.random() * 40) + 1;
+      this.setCondition = this.condition - randomNumber;
+      if (this.condition < 0) this.setCondition = 0;
+      //   console.log(this._condition);
+    } else {
+      this.setCondition = 0;
+      //   console.log("Tidak bisa menjalankan method");
+    }
   }
 }
 
