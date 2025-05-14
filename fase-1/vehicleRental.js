@@ -9,6 +9,7 @@
 
 class Vehicle {
   // Release 0
+  #condition;
   constructor(
     brand,
     model,
@@ -22,7 +23,7 @@ class Vehicle {
     this.brand = brand || "";
     this.model = model || "";
     this.price = price || 0;
-    this._condition = condition || 100;
+    this.#condition = condition || 100;
     /* _condition artinya private property */
     // truthy-truthy pasti ambil sisi kiri dari truthy
     // falsy-falsy pasti ambil sisi kanan dari falsy
@@ -32,24 +33,24 @@ class Vehicle {
     this.totalRentCost = totalRentCost || 0;
   }
 
-  condition() {
-    return this._condition;
+  get condition() {
+    return this.#condition;
   }
 
-  setCondition(condition) {
-    this._condition = condition;
+  set setCondition(condition) {
+    this.#condition = condition;
   }
 
   // Release 1
   increasingAge() {
-    if (this._condition > 0) {
+    if (this.condition > 0) {
       this.age += 1;
       let randomNumber = Math.ceil(Math.random() * 30);
-      this._condition -= randomNumber;
+      this.setCondition = this.condition - randomNumber;
       if (this._condition < 0) this._condition = 0;
       //   console.log(this._condition);
     } else {
-      this._condition = 0;
+      this.setCondition = 0;
       //   console.log("Tidak bisa menjalankan method");
     }
   }
@@ -119,10 +120,10 @@ do {
   console.log(
     `Age ${
       vehicle.age
-    } Report | Condition = ${vehicle.condition()}% | ${vehicle.report()}`
+    } Report | Condition = ${vehicle.condition}% | ${vehicle.report()}`
   );
   vehicle.resetReport();
-} while (vehicle.condition() > 0);
+} while (vehicle.condition > 0);
 
 // Release 6 dan 7
 
@@ -186,4 +187,3 @@ class MotorCycleCustomer extends Customer {
 }
 
 // Release 7
-
