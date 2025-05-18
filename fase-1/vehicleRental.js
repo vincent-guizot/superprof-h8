@@ -9,6 +9,7 @@
 
 class Vehicle {
   // Release 0
+  #condition;
   constructor(
     brand,
     model,
@@ -22,7 +23,7 @@ class Vehicle {
     this.brand = brand || "";
     this.model = model || "";
     this.price = price || 0;
-    this._condition = condition || 100;
+    this.#condition = condition || 100;
     /* _condition artinya private property */
     // truthy-truthy pasti ambil sisi kiri dari truthy
     // falsy-falsy pasti ambil sisi kanan dari falsy
@@ -32,24 +33,25 @@ class Vehicle {
     this.totalRentCost = totalRentCost || 0;
   }
 
-  getCondition() {
-    return this._condition;
+  get condition() {
+    return this.#condition;
   }
 
-  setCondition(condition) {
-    this._condition = condition;
+  set setCondition(condition) {
+    this.#condition = condition;
   }
 
   // Release 1
   increasingAge() {
-    if (this._condition > 0) {
-      this._condition += 1;
-      let randomNumber = Math.ceil(Math.random() * 30);
-      this._condition -= randomNumber;
-      if (this._condition < 0) this._condition = 0;
-      console.log(this._condition);
+    if (this.condition > 0) {
+      this.age += 1;
+      let randomNumber = Math.floor(Math.random() * 30) + 1;
+      this.setCondition = this.condition - randomNumber;
+      if (this.condition < 0) this.setCondition = 0;
+      //   console.log(this._condition);
     } else {
-      console.log("Tidak bisa menjalankan method");
+      this.setCondition = 0;
+      //   console.log("Tidak bisa menjalankan method");
     }
   }
 
@@ -65,16 +67,31 @@ class Vehicle {
   }
 
   // Release 4
-  calculate() {}
+  calculate() {
+    this.totalRentCost = this.customers.length * this.price;
+    this.totalRentDays = this.customers.length;
+  }
   report() {
-    let result = {
-      "Total rent days": 0,
-      "Total rent cost": 0,
-      good: 0,
-      bad: 0,
+    let review = this.getRatings();
+    return `Total rent days : ${this.totalRentDays} Total rent cost: ${this.totalRentCost} Reviews: ${this.customers.length} (${review.good} good, ${review.bad} bad)`;
+  }
+  resetReport() {
+    this.customers = [];
+    this.totalRentCost = 0;
+    this.totalRentDays = 0;
+  }
+  getRatings() {
+    let totalGood = 0;
+    let totalBad = 0;
+    this.customers.forEach((customer) => {
+      if (customer.review === "good") totalGood++;
+      else if (customer.review === "bad") totalBad++;
+    });
+    return {
+      good: totalGood,
+      bad: totalBad,
     };
   }
-  resetReport() {}
 }
 
 // Release 2
@@ -94,5 +111,99 @@ class Customer {
 
 let vehicle = new Vehicle("Toyota", "Camry", 200_000);
 
-vehicle.rent();
-console.log(vehicle);
+// Release 5
+
+do {
+  vehicle.increasingAge();
+  vehicle.rent();
+  vehicle.calculate();
+  console.log(
+    `Age ${vehicle.age} Report | Condition = ${
+      vehicle.condition
+    }% | ${vehicle.report()}`
+  );
+  vehicle.resetReport();
+} while (vehicle.condition > 0);
+
+// Release 6 dan 7 dan 8
+
+class Car extends Vehicle {
+  constructor(
+    brand,
+    model,
+    condition,
+    age,
+    customers,
+    totalRentDays,
+    totalRentCost
+  ) {
+    super(
+      brand,
+      model,
+      300000,
+      condition,
+      age,
+      customers,
+      totalRentCost,
+      totalRentDays
+    );
+  }
+  rent() {
+    let index = 0;
+    while (index > 15) {
+      this.customers.push(new Customer());
+      index++;
+    }
+  }
+}
+
+class MotorCycle extends Vehicle {
+  constructor(
+    brand,
+    model,
+    condition,
+    age,
+    customers,
+    totalRentDays,
+    totalRentCost
+  ) {
+    super(
+      brand,
+      model,
+      100000,
+      condition,
+      age,
+      customers,
+      totalRentCost,
+      totalRentDays
+    );
+    this.frameType = "Tubular Frame";
+  }
+
+  increasingAge() {
+    if (this.condition > 0) {
+      this.age += 1;
+      let randomNumber = Math.floor(Math.random() * 40) + 1;
+      this.setCondition = this.condition - randomNumber;
+      if (this.condition < 0) this.setCondition = 0;
+      //   console.log(this._condition);
+    } else {
+      this.setCondition = 0;
+      //   console.log("Tidak bisa menjalankan method");
+    }
+  }
+}
+
+class CarCustomer extends Customer {
+  constructor() {
+    super();
+  }
+}
+
+class MotorCycleCustomer extends Customer {
+  constructor() {
+    super();
+  }
+}
+
+// Release 7
