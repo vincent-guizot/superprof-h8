@@ -3,28 +3,28 @@ const fs = require('fs').promises;
 
 async function seeding() {
     try {
-        const dataComp = JSON.parse(await fs.readFile('./data/company.json', 'utf8')).map(el => {
-            return `('${el.name}')`
+        const dataAuthor = JSON.parse(await fs.readFile('./data/authors.json', 'utf8')).map(el => {
+            return `('${el.fullName}, ${el.gender}')`
         })
 
-        const dataGG = JSON.parse(await fs.readFile('./data/girlGroup.json', 'utf8')).map(el => {
-            return `('${el.name}', ${el.member}, ${el.company}, '${el.debutSong}')`
+        const dataPost = JSON.parse(await fs.readFile('./data/posts.json', 'utf8')).map(el => {
+            return `('${el.title}', ${el.difficulty}, ${el.estimatedTime}, '${el.description}, ${el.totalVote}, ${el.imageUrl}, ${el.createdDate}, ${el.AuthorId}')`
         })
 
-        const seedComp = `
-            INSERT INTO "Companies"(name)
-            VALUES ${dataComp}
+        const seedAuthor = `
+            INSERT INTO "Authors"(fullName, gender)
+            VALUES ${dataAuthor}
         `
 
-        const seedGG = `
-            INSERT INTO "GirlGroups" (name, member, "CompanyId", "debutSong")
-            VALUES  ${dataGG}
+        const seedPost = `
+            INSERT INTO "Posts" (title, difficulty, estimatedTime, description, totalVote, imageUrl, createdDate, "AuthorId")
+            VALUES  ${dataPost}
         `
 
-        await pool.query(seedComp)
-        console.log("SUCCESS SEED COMPANIES");
-        await pool.query(seedGG)
-        console.log("SUCCESS SEED GIRLGROUPS");
+        await pool.query(seedAuthor)
+        console.log("SUCCESS SEED AUTHORS");
+        await pool.query(seedPost)
+        console.log("SUCCESS SEED POSTS");
         
     } catch (error) {
         console.log("ERROR SEEDING", error);
