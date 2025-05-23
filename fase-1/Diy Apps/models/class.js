@@ -37,3 +37,5 @@ class PostDetail extends Post {
     this.authorName = authorName;
   }
 }
+
+module.exports = {AuthorDetail, PostDetail}
