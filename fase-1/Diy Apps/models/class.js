@@ -1,7 +1,5 @@
-
-
 class Author {
-  constructor(id, fullName, gender){
+  constructor(id, fullName, gender) {
     this.id = id;
     this.fullName = fullName;
     this.gender = gender;
@@ -9,7 +7,7 @@ class Author {
 }
 
 class AuthorDetail extends Author {
-  constructor(id, fullName, gender, totalPost, totalVote, averageTime){
+  constructor(id, fullName, gender, totalPost, totalVote, averageTime) {
     super(id, fullName, gender);
     this.totalPost = totalPost;
     this.totalVote = totalVote;
@@ -18,7 +16,7 @@ class AuthorDetail extends Author {
 }
 
 class Post {
-  constructor(id, title, difficulty, totalVote){
+  constructor(id, title, difficulty, totalVote) {
     this.id = id;
     this.title = title;
     this.difficulty = difficulty;
@@ -27,8 +25,19 @@ class Post {
 }
 
 class PostDetail extends Post {
-  constructor(id, title, difficulty, totalVote, estimatedTime, description, imageUrl, createdDate, AuthorId, authorName){
-    super(id, title, difficulty, totalVote)
+  constructor(
+    id,
+    title,
+    difficulty,
+    totalVote,
+    estimatedTime,
+    description,
+    imageUrl,
+    createdDate,
+    AuthorId,
+    authorName
+  ) {
+    super(id, title, difficulty, totalVote);
     this.estimatedTime = estimatedTimel;
     this.description = description;
     this.imageUrl = imageUrl;
@@ -38,4 +47,4 @@ class PostDetail extends Post {
   }
 }
 
-module.exports = {AuthorDetail, PostDetail}
+module.exports = { AuthorDetail, PostDetail };
