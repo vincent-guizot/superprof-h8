@@ -3,7 +3,34 @@
 <html lang="en">
   <%- include('partial/_header', {title : 'Post - Home'}) %>
   <body>
-    Homepage
+    <%- include('partial/_banner')%>
+    <div class="container">
+      <div class="p-2 text-center">Post</div>
+      <div>
+        <table class="table table-striped">
+          <thead>
+            <th>Title</th>
+            <th>Difficulty</th>
+            <th>Total Vote</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            <% posts.forEach(post => { %>
+            <tr>
+              <td><%- post.title %></td>
+              <td><%- post.difficulty %></td>
+              <td><%- post.totalVote %></td>
+              <td>
+                <a class="btn btn-primary">Read More</a>
+                <a class="btn btn-warning">Edit</a>
+                <a class="btn btn-danger">Delete</a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </body>
 
   <%- include('partial/_footer') %>

@@ -3,7 +3,26 @@
 <html lang="en">
   <%- include('partial/_header', {title : 'Author - Home'}) %>
   <body>
-    Homepage
+    <%- include('partial/_banner')%>
+    <div class="container">
+      <div class="p-2 text-center">Authors</div>
+      <div>
+        <table class="table table-striped">
+          <thead>
+            <th>Id</th>
+            <th>Author</th>
+          </thead>
+          <tbody>
+            <% authors.forEach(author => { %>
+            <tr>
+              <td><%- author.id%></td>
+              <td><%- author.name%></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </body>
 
   <%- include('partial/_footer') %>

@@ -3,7 +3,12 @@
 <html lang="en">
   <%- include('partial/_header', {title : 'Home'}) %>
   <body>
-    Homepage
+    <%- include('partial/_banner')%>
+
+    <div class="container text-center">
+      <a href="/authors" class="btn btn-success">Authors</a>
+      <a href="/posts" class="btn btn-warning">Posts</a>
+    </div>
   </body>
 
   <%- include('partial/_footer') %>

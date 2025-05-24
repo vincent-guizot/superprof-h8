@@ -8,7 +8,14 @@ class Controller {
     try {
       //
       let authors = await Model.getAuthors();
-      res.json(authors);
+      let result = [];
+      result = authors.map((author) => {
+        const { id, fullName, gender } = author;
+        if (gender === "Male") return { id, name: `Mr. ${fullName}` };
+        else if (gender === "Female") return { id, name: `Ms. ${fullName}` };
+      });
+      res.render("author.ejs", { authors: result });
+      // res.json(result);
     } catch (err) {
       res.json(err);
     }
@@ -17,6 +24,9 @@ class Controller {
   static async getPosts(req, res) {
     try {
       //
+      let posts = await Model.getPosts();
+
+      res.render("post.ejs", { posts });
     } catch (err) {
       res.json(err);
     }

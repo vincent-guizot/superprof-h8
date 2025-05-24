@@ -1,4 +1,4 @@
-const { AuthorDetail, PostDetail } = require("./class");
+const { Author, AuthorDetail, Post, PostDetail } = require("./class");
 const pool = require("../db/config");
 
 class Model {
@@ -9,11 +9,47 @@ class Model {
             `;
 
       let { rows } = await pool.query(query);
-      console.log(rows);
-      // rows = rows.map(el => {
-      //     return new Company(el.id, el.name)
-      // })
-      // return rows
+      rows = rows.map((author) => {
+        const { id, fullname, gender } = author;
+        return new Author(id, fullname, gender);
+      });
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async getPosts() {
+    try {
+      let query = `
+                SELECT * FROM "Posts"
+            `;
+
+      let { rows } = await pool.query(query);
+      rows = rows.map((post) => {
+        const {
+          id,
+          title,
+          difficulty,
+          estimatedtime,
+          description,
+          totalvote,
+          imageurl,
+          createddate,
+          AuthorId,
+        } = post;
+        return new Post(
+          id,
+          title,
+          difficulty,
+          estimatedtime,
+          description,
+          totalvote,
+          imageurl,
+          createddate,
+          AuthorId
+        );
+      });
+      return rows;
     } catch (error) {
       throw error;
     }
