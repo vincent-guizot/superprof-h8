@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partial/_head', {title : 'Add Girlgroup'}) %>
+<body>
+    <h1>Add Girlgroup</h1>
+    <% if (errors) { %>
+     <% errors = errors.split(',') %>
+     <% errors.forEach(error => { %>
+        <p style="color: red;"><%= error %></p>
+     <% }) %>
+    <% } %>
+    <form method="post" action="/girlgroups/add">
+        <p>
+            <label>Name</label>
+            <input type="text" name="name">
+        </p>
+        <p>
+            <label>Member</label>
+            <input type="number" name="member">
+        </p>
+        <p>
+            <label>Debut Song</label>
+            <input type="text" name="debutSong">
+        </p>
+        <p>
+            <label>Company</label>
+            <select name="company">
+                <option selected disabled>CHOOSE</option>
+                <% companies.forEach(el => { %>
+                    <option value="<%= el.id %>"><%= el.name %></option>
+                <% }) %>
+            </select>
+        </p>
+        <input type="submit" value="SUBMIT">
+    </form>
+</body>
+</html>

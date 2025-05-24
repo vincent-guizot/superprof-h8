@@ -1,37 +1,57 @@
 const pool = require("./config");
-const fs = require('fs').promises;
+const fs = require("fs").promises;
 
 async function seeding() {
-    try {
-        const dataAuthor = JSON.parse(await fs.readFile('./data/authors.json', 'utf8')).map(el => {
-            return `('${el.fullName}, ${el.gender}')`
-        })
+  try {
+    const authors = JSON.parse(
+      await fs.readFile("./data/authors.json", "utf8")
+    );
+    const valuesAuthor = [];
+    const placeholders = authors.map((author, i) => {
+      const base = i * 2; // 4 columns
+      valuesAuthor.push(author.fullName, author.gender);
+      return `($${base + 1}, $${base + 2})`;
+    });
 
-        const dataPost = JSON.parse(await fs.readFile('./data/posts.json', 'utf8')).map(el => {
-            return `('${el.title}', ${el.difficulty}, ${el.estimatedTime}, '${el.description}, ${el.totalVote}, ${el.imageUrl}, ${el.createdDate}, ${el.AuthorId}')`
-        })
+    const posts = JSON.parse(await fs.readFile("./data/posts.json", "utf8"));
+    const valuesPost = [];
+    const placeholdersPost = posts.map((post, i) => {
+      const base = i * 8; // 4 columns
+      valuesPost.push(
+        post.title,
+        post.difficulty,
+        post.estimatedTime,
+        post.description,
+        post.totalVote,
+        post.imageUrl,
+        post.createdDate,
+        post.AuthorId
+      );
+      return `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${
+        base + 5
+      }, $${base + 6}, $${base + 7}, $${base + 8})`;
+    });
 
-        const seedAuthor = `
-            INSERT INTO "Authors"(fullName, gender)
-            VALUES ${dataAuthor}
-        `
+    const seedAuthor = `
+            INSERT INTO "Authors" (fullname, gender)
+            VALUES ${placeholders.join(", ")}
+        `;
 
-        const seedPost = `
-            INSERT INTO "Posts" (title, difficulty, estimatedTime, description, totalVote, imageUrl, createdDate, "AuthorId")
-            VALUES  ${dataPost}
-        `
+    const seedPost = `
+            INSERT INTO "Posts" (title, difficulty, estimatedtime, description, totalvote, imageurl, createddate, "AuthorId")
+            VALUES ${placeholdersPost.join(", ")}
+        `;
 
-        await pool.query(seedAuthor)
-        console.log("SUCCESS SEED AUTHORS");
-        await pool.query(seedPost)
-        console.log("SUCCESS SEED POSTS");
-        
-    } catch (error) {
-        console.log("ERROR SEEDING", error);
-    }
+    await pool.query(seedAuthor, valuesAuthor);
+    console.log("SUCCESS SEED AUTHORS");
+    await pool.query(seedPost, valuesPost);
+    console.log("SUCCESS SEED POSTS");
+  } catch (error) {
+    console.log("ERROR SEEDING", error);
+  }
 }
 
-seeding()
+seeding();
 
 /*
     INSERT INTO "Companies" ("name")

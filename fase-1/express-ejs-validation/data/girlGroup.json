@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "ITZY",
+    "member": 5,
+    "company": 2,
+    "debutSong": "Dalla Dalla"
+  },
+  {
+    "id": 2,
+    "name": "aespa",
+    "member": 4,
+    "company": 1,
+    "debutSong": "Black Mamba"
+  },
+  {
+    "id": 3,
+    "name": "STAYC",
+    "member": 6,
+    "company": 3,
+    "debutSong": "So Bad"
+  },
+  {
+    "id": 4,
+    "name": "Everglow",
+    "member": 6,
+    "company": 3,
+    "debutSong": "Bon Bon Chocolat"
+  },
+  {
+    "id": 5,
+    "name": "IVE",
+    "member": 6,
+    "company": 2,
+    "debutSong": "Eleven"
+  },
+  {
+    "id": 6,
+    "name": "Le Sserafim",
+    "member": 5,
+    "company": 1,
+    "debutSong": "Fearless"
+  }
+]

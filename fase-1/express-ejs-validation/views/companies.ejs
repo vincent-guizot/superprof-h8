@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partial/_head', {title : 'Companies'}) %>
+<body>
+    <h1>Companies</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+        <% data.forEach(el => { %>
+            <tr>
+                <td><%= el.id %></td>
+                <td><%= el.name %></td>
+            </tr>
+        <% }) %>
+    </table>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partial/_head', {title : 'Edit Girlgroup'}) %>
+<body>
+    <h1>Edit Girlgroup</h1>
+    <% if (errors) { %>
+     <% errors = errors.split(',') %>
+     <% errors.forEach(error => { %>
+        <p style="color: red;"><%= error %></p>
+     <% }) %>
+    <% } %>
+    <form method="post" action="/girlgroups/<%= gg.id %>/edit">
+        <p>
+            <label>Name</label>
+            <input type="text" name="name" value="<%= gg.name %>">
+        </p>
+        <p>
+            <label>Member</label>
+            <input type="number" name="member" value="<%= gg.member %>">
+        </p>
+        <p>
+            <label>Debut Song</label>
+            <input type="text" name="debutSong" value="<%= gg.debutSong %>">
+        </p>
+        <p>
+            <label>Company</label>
+            <select name="company">
+                <% companies.forEach(el => { %>
+                    <option value="<%= el.id %>" <%= el.id === gg.CompanyId ?'selected' : ''%>><%= el.name %></option>
+                <% }) %>
+            </select>
+        </p>
+        <input type="submit" value="SUBMIT">
+    </form>
+</body>
+</html>

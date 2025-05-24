@@ -38,7 +38,7 @@ class PostDetail extends Post {
     authorName
   ) {
     super(id, title, difficulty, totalVote);
-    this.estimatedTime = estimatedTimel;
+    this.estimatedTime = estimatedTime;
     this.description = description;
     this.imageUrl = imageUrl;
     this.createdDate = createdDate;
